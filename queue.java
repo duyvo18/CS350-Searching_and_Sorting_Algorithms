@@ -20,6 +20,7 @@ public class queue {
 
             /*
              * Sort customer waiting times
+             * O(nlogn)
              */
             Arrays.sort(customer_waiting_times);
             
