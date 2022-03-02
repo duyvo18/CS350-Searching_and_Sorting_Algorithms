@@ -1,5 +1,5 @@
+import java.util.Arrays;
 import java.util.Scanner;
-import java.util.ArrayList;
 
 public class queue {
     public static void main(String[] args) {
@@ -12,17 +12,17 @@ public class queue {
             /*
              * Read customer waiting times
              */
-            ArrayList<Integer> customer_waiting_times = new ArrayList<>();
+            int customer_waiting_times[] = new int[input_size];
             String elem_inputs[] = scanner_in.nextLine().split(" ");
-            for (String elem : elem_inputs) {
-                customer_waiting_times.add(Integer.parseInt(elem));
+            for (int i = 0; i < input_size; ++i) {
+                customer_waiting_times[i] = Integer.parseInt(elem_inputs[i]);
             }
 
             /*
              * Sort customer waiting times
              * O(nlogn)
              */
-            customer_waiting_times.sort(null);
+            Arrays.sort(customer_waiting_times);
 
             /*
              * The customer is satisfied if
@@ -31,30 +31,12 @@ public class queue {
              */
             int elapsed = 0;
             int satisfy_customers = 0;
-            // use iterator instead of while loop + index access
-            
-            // NOT OPTIMIZED: while loop + ArrayList access is O(n^2)
-            // int i = 0;
-            // while (i < input_size) {
-            //     // Remove customer if cannot serve in time
-            //     if (elapsed > customer_waiting_times.get(i)) {
-            //         customer_waiting_times.remove(i);
-            //         --input_size;
-            //         continue;
-            //     } else {
-            //         ++satisfy_customers;
-            //         elapsed += customer_waiting_times.get(i);
-            //         ++i;
-            //     }
-            // }
-
-            // NOT OPTIMIZED: unsatisfy customers increase unnecessary waiting time
-            // for (int time : customer_waiting_times) {
-            // if (elapsed <= time) {
-            // ++satisfy_customers;
-            // }
-            // elapsed += time;
-            // }
+            for (int time : customer_waiting_times) {
+                if (elapsed <= time) {
+                    ++satisfy_customers;
+                    elapsed += time;
+                }
+            }
 
             System.out.print(satisfy_customers);
         }
